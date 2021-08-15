@@ -29,7 +29,30 @@ const getUser = async(req, res) => {
 
 const addUser = async(req, res) => {
     try {
+
+        console.log(req.body);
         let { first_name, last_name, email } = req.body
+
+        let user = await User.findOne({ where: { email: email } });
+         if (user) {
+          return res.status(401).json({ error: true, msg: "E-mail already taken" });
+        }
+
+        if (first_name == "" || first_name == null || first_name == undefined) {
+            return res
+              .status(401)
+              .json({ error: true, msg: "First Name is requrired." });
+        }
+        if (last_name == "" || last_name == null || last_name == undefined) {
+            return res
+              .status(401)
+              .json({ error: true, msg: "Last Name is requrired." });
+        }
+        if (email == "" || email == null || email == undefined) {
+            return res
+              .status(401)
+              .json({ error: true, msg: "Email is requrired." });
+          }
         
         const newUser = await User.create({
             first_name,

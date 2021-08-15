@@ -1,5 +1,5 @@
 import express from 'express'
-
+import {form} from '../middlewares/fileHandle'
 import UserController from '../controllers/employeeController'
 
 const router = express.Router()
@@ -7,7 +7,7 @@ const router = express.Router()
 
 router.get('/all-employee', UserController.getAllUser)
 router.get('/employee/:id', UserController.getUser)
-router.post('/add-employee', UserController.addUser)
+router.post('/add-employee', form, UserController.addUser)
 
 
 
