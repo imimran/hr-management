@@ -1,0 +1,27 @@
+{
+  "name": "hr-management",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/imimran/hr-management.git"
+  },
+  "author": "Al Imran Hossain",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/imimran/hr-management/issues"
+  },
+  "homepage": "https://github.com/imimran/hr-management#readme",
+  "dependencies": {
+    "dotenv": "^10.0.0",
+    "express": "^4.17.1",
+    "sequelize": "^6.6.5"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.12"
+  }
+}
