@@ -4,7 +4,13 @@ import User from '../models/user'
 
 const getAllUser = async(req, res) => {
     try {
-        const users = await User.findAll({})
+        const limit = parseInt(req.query.limit) ? parseInt(req.query.limit) : null;
+    const offset = parseInt(req.query.offset)
+      ? parseInt(req.query.offset)
+      : null;
+        const users = await User.findAll({ limit,
+            offset,
+            order: [["ID", "DESC"]],})
         return res.status(200).json({ error: false, data: users})
     } catch (error) {
         console.log(error);
