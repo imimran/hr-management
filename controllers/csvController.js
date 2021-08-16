@@ -2,9 +2,7 @@ import User from '../models/user';
 import fs from "fs";
 import * as csv from 'fast-csv';
 
-
-
- const upload = async (req, res) => {
+const upload = async (req, res) => {
     try {
       if (req.file == undefined) {
         return res.status(400).send("Please upload a CSV file!");
@@ -32,6 +30,7 @@ import * as csv from 'fast-csv';
               res.status(200).send({
                 message:
                   `Uploaded ${users.length} data  successfully from ` + req.file.originalname,
+                // error: error.message,
               });
             })
             .catch((error) => {
@@ -49,7 +48,6 @@ import * as csv from 'fast-csv';
     }
 };
   
-
 const getUsers = (req, res) => {
     // User.findAll()
     //   .then((data) => {
