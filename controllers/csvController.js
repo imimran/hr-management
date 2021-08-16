@@ -26,17 +26,22 @@ const upload = async (req, res) => {
           User.bulkCreate(users, {
             validate: true,
           })
-            .then(() => {
+            .then(async() => {
+            //   let user = await User.findOne({ where: { email: email } });
+            //   if (user) {
+            //    return res.status(401).json({ error: true, msg: "E-mail already taken" });
+            //  }
               res.status(200).send({
                 message:
                   `Uploaded ${users.length} data  successfully from ` + req.file.originalname,
-                // error: error.message,
+              
               });
             })
             .catch((error) => {
+              console.log(error);
               res.status(500).send({
                 message: `Fail to import ${users.length}  into database!`,
-                error: error.message,
+            
               });
             });
         });

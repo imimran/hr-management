@@ -14,6 +14,7 @@ import {sequelize}  from './db';
       first_name: {
         type: Sequelize.STRING(60),
         allowNull: false,
+       
       },
       last_name: {
         type: Sequelize.STRING(60),
@@ -22,6 +23,7 @@ import {sequelize}  from './db';
       email: {
         type: Sequelize.STRING(255),
         allowNull: false,
+        unique: true
       },
     },
     {
