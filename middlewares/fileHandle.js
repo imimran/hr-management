@@ -37,11 +37,19 @@ const fileFilter = (req, file, cb) => {
     }
 };
 
+const csvFilter = (req, file, cb) => {
+    if (file.mimetype.includes("csv")) {
+      cb(null, true);
+    } else {
+      cb("Please upload only csv file.", false);
+    }
+  };
+
 
 
 const upload = multer({
     storage: fileStorage,
-    fileFilter: fileFilter,
+    fileFilter: csvFilter,
     limits: { fileSize: 1000000 } //1 MB //count as a byte
 });
 
@@ -53,7 +61,7 @@ const multipleFile = upload.fields([
 ]);
 
 
-const uploadFile = upload.single('image');
+const uploadFile = upload.single('file');
 const uploadAvatar = upload.single('avatar');
 const multiFileUploader = upload.array('avatar', 3)
 const uploadCoverPhoto = upload.single('cover_photo');

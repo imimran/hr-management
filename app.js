@@ -8,7 +8,10 @@ import employeeRoutes from './routes/public'
 const app = express()
 app.use(express.json())
 app.use(cors());
+app.use(express.urlencoded({ extended: true }));
 
+
+global.__basedir = __dirname ;
 app.use('/api/v1', employeeRoutes);
 
 app.get('/', (req, res) =>{
@@ -20,7 +23,7 @@ app.use((req, res) =>{
 })
 
 //serve static files
-app.use(express.static(path.join(__dirname, '/upload/')));
+app.use(express.static(path.join(__dirname, '/uploads/')));
 
 
 
