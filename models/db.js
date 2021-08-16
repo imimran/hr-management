@@ -1,5 +1,5 @@
 import Sequelize from 'sequelize'
-export const sequelize = new Sequelize('hrmanagement', 'root', '', {
+export const sequelize = new Sequelize('hrmanagement', 'root', '@Abc123456', {
   dialect: 'mysql',
   host: 'localhost',
   pool: {
@@ -15,17 +15,7 @@ export const sequelize = new Sequelize('hrmanagement', 'root', '', {
   timezone: '+06:00',
 })
 
-// //import tables
-// import UserModel from "./user"
-// const User = UserModel(sequelize, Sequelize);
 
-
-// export default sequelize;
-
-/*Generating the database table. If we set force:true then each and every
- *time when we start our application all tables will be drop from the
- *database and regenerate new. So beware of it before using it.
- */
 
 
 

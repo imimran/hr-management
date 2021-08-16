@@ -1,7 +1,7 @@
 import express from 'express'
 import path from 'path';
 import { sequelize } from './models/db';
-
+import cors from 'cors'
 
 import employeeRoutes from './routes/public'
 // import sequelize  from './models'
@@ -23,6 +23,11 @@ app.use((req, res) =>{
 app.use(express.static(path.join(__dirname, '/upload/')));
 
 
+
+/*Generating the database table. If we set force:true then each and every
+ *time when we start our application all tables will be drop from the
+ *database and regenerate new. So beware of it before using it.
+ */
 
 //connect Database
 (async () => {

@@ -14,12 +14,10 @@ import {sequelize}  from './db';
       first_name: {
         type: Sequelize.STRING(60),
         allowNull: false,
-        unique: true,
       },
       last_name: {
         type: Sequelize.STRING(60),
         allowNull: false,
-        unique: true,
       },
       email: {
         type: Sequelize.STRING(255),
