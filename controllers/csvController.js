@@ -3,7 +3,7 @@ import fs from "fs";
 import * as csv from 'fast-csv';
 
 const upload = async (req, res) => {
-    try {
+    // try {
       if (req.file == undefined) {
         return res.status(400).send("Please upload a CSV file!");
       }
@@ -19,15 +19,22 @@ const upload = async (req, res) => {
     // .on('error', error => console.error(error))
     // .on('data', row => console.log(`ROW=${JSON.stringify(row)}`))
     // .on('end', rowCount => console.log(`Parsed ${rowCount} rows`));
-  
+  let successCount = 0;
+  let errorCount = 0;
       fs.createReadStream(path)
-        .pipe(csv.parse({ headers: true }))
-        .on("error", (error) => {
+        .pipe(csv.parse({ headers: true, ignoreEmpty: true, }))
+        .validate(data => data.first_name !== '' && data.last_name !== '' && data.email !== '')
+        .on("error", (error) => {          
           throw error.message;
         })
         .on("data", (row) => {
+          successCount++;
           users.push(row);
           console.log(`ROW=${JSON.stringify(row)}`)
+        })
+        .on('data-invalid', (row, rowNumber) => {
+          errorCount++;
+          console.log(`Invalid [rowNumber=${rowNumber}] [row=${JSON.stringify(row)}]`)
         })
         .on("end", (rowCount) => {
           console.log(`Parsed ${rowCount} rows`)
@@ -38,8 +45,11 @@ const upload = async (req, res) => {
            
               res.status(200).json({
                 error: false,
-                message:
+                success:
                   `Uploaded ${users.length} row successfully from ` + req.file.originalname,
+                successCount,
+                errorCount
+               
               
               });
             })
@@ -52,13 +62,13 @@ const upload = async (req, res) => {
               });
             });
         });
-    } catch (error) {
-      console.log(error);
-      res.status(500).json({
-        error: true,
-        message: "Could not upload the file: " + req.file.originalname,
-      });
-    }
+    // } catch (error) {
+    //   console.log(error);
+    //   res.status(500).json({
+    //     error: true,
+    //     message: "Could not upload the file: " + req.file.originalname,
+    //   });
+    // }
 };
   
 const getUsers = (req, res) => {
@@ -79,3 +89,4 @@ export default{
     getUsers
   };
 
+  

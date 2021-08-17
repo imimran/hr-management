@@ -1,4 +1,4 @@
-const {check,  validationResult} = require('express-validator');
+import {check,  validationResult} from 'express-validator'
 
 
 //checking for validation errors 
