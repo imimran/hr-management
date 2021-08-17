@@ -13,6 +13,12 @@ const upload = async (req, res) => {
       let path = __basedir + "/uploads/" + req.file.filename;
 
       console.log("path", path);
+
+    //   fs.createReadStream('my.csv')
+    // .pipe(csv.parse())
+    // .on('error', error => console.error(error))
+    // .on('data', row => console.log(`ROW=${JSON.stringify(row)}`))
+    // .on('end', rowCount => console.log(`Parsed ${rowCount} rows`));
   
       fs.createReadStream(path)
         .pipe(csv.parse({ headers: true }))
@@ -21,33 +27,35 @@ const upload = async (req, res) => {
         })
         .on("data", (row) => {
           users.push(row);
+          console.log(`ROW=${JSON.stringify(row)}`)
         })
-        .on("end", () => {
+        .on("end", (rowCount) => {
+          console.log(`Parsed ${rowCount} rows`)
           User.bulkCreate(users, {
             validate: true,
           })
             .then(async() => {
-            //   let user = await User.findOne({ where: { email: email } });
-            //   if (user) {
-            //    return res.status(401).json({ error: true, msg: "E-mail already taken" });
-            //  }
-              res.status(200).send({
+           
+              res.status(200).json({
+                error: false,
                 message:
-                  `Uploaded ${users.length} data  successfully from ` + req.file.originalname,
+                  `Uploaded ${users.length} row successfully from ` + req.file.originalname,
               
               });
             })
             .catch((error) => {
               console.log(error);
-              res.status(500).send({
-                message: `Fail to import ${users.length}  into database!`,
+              res.status(500).json({
+                error: error.message,
+                message: `Fail to import ${users.length} row into database!`,
             
               });
             });
         });
     } catch (error) {
       console.log(error);
-      res.status(500).send({
+      res.status(500).json({
+        error: true,
         message: "Could not upload the file: " + req.file.originalname,
       });
     }
