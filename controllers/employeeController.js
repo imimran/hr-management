@@ -4,14 +4,27 @@ import User from '../models/user'
 
 const getAllUser = async(req, res) => {
     try {
-        const limit = parseInt(req.query.limit) ? parseInt(req.query.limit) : null;
-    const offset = parseInt(req.query.offset)
-      ? parseInt(req.query.offset)
-      : null;
+    //     const limit = parseInt(req.query.limit) ? parseInt(req.query.limit) : null;
+    // const offset = parseInt(req.query.offset)
+    //   ? parseInt(req.query.offset)
+    //   : null;
+        
+    const page = parseInt(req.query.page) || 1;
+
+    const limit = 5;
+    const offset = Math.ceil(limit * (page - 1));
         const users = await User.findAll({ limit,
             offset,
-            order: [["ID", "DESC"]],})
-        return res.status(200).json({ error: false, data: users})
+            order: [["ID", "DESC"]],
+        })
+        
+        const userCount = await User.findAndCountAll({});
+        return res.status(200).json({
+            error: false,
+            data: users,
+            currentPage: page,
+            totalPage: Math.ceil(userCount.count / limit),
+        })
     } catch (error) {
         console.log(error);
         return res.status(500).json({ error: false, msg: "Server Error"})
