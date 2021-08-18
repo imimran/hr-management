@@ -8,23 +8,23 @@ function EmployeeListScreen() {
   const [loading, setLoading] = useState();
   const [error, setError] = useState();
   const [pageCount, setPageCount] = useState(0);
-  const [currentPage] = useState(1);
-
   
 
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  useEffect(async () => {
-    // apiBaseUrl + "/api/v1/all-employee?limit="+ dataPerPage + '&offset='+ offset
+  useEffect(() => {
+    setLoading(true)
       Axios.get(apiBaseUrl + "/api/v1/all-employee")
         .then((response) => {
           console.log(response.data);
-
           console.log(response.data.data);
           setEmployee(response.data.data);
           setPageCount(response.data.totalPage);
+        setLoading(false)
+
         })
         .catch((err) => {
+         setError(true)
           console.log(err);
+          setLoading(false)
         });
     
   }, []);
