@@ -38,15 +38,9 @@ function AddEmployeeScreen() {
 }
 
     return (
-        <FormContainer>
+     
       
-             <br/>
-                  
-         <h2>Create Employee</h2>
-            {/* {error && <Message variant="danger">{error}</Message>} */}
-            
-            <br />
-            <br/>
+     
                     
         <Form  onSubmit={handleEmployeeSubmit}>
           <Form.Group controlId="message">
@@ -71,7 +65,7 @@ function AddEmployeeScreen() {
        
    
        
-      </FormContainer>
+    
     )
 }
 

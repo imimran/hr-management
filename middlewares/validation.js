@@ -9,9 +9,6 @@ const validate = (req, res, next) => {
             return next()
         }
         console.log("valdation error: ", errors.array());
-        // console.log("image: ", req.file);
-
-
         return res.status(200).json({errors: errors.array()});
 }
 

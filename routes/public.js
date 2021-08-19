@@ -11,7 +11,7 @@ const router = express.Router()
 
 router.get('/all-employee', UserController.getAllUser)
 router.get('/employee/:id', UserController.getUser)
-router.post('/add-employee', form,   UserController.addUser)
+router.post('/add-employee', form, validation.employeeRegister(), validation.validate,  UserController.addUser)
 router.post('/upload', uploadFile, CSVController.upload)
 
 router.post('/send-bulk-message', form,  MailController.bulkMessgeSend);

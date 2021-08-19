@@ -3,7 +3,7 @@ import React from 'react';
 function Navbar() {
     return (
         <div>
-            <nav className="navbar navbar-expand-lg ">
+            <nav className="navbar navbar-expand-sm ">
                 <a className="navbar-brand" href="/home">
                     HR Management
                 </a>

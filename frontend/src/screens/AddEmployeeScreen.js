@@ -4,25 +4,30 @@ import Axios from "axios";
 import { apiBaseUrl } from "../config/apiConfig";
 import { useForm } from "react-hook-form";
 import { useAlert } from 'react-alert';
+import { useHistory } from "react-router-dom";
+
+
 function AddEmployeeScreen() {
   const [first_name, setfirst_name] = useState("");
   const [last_name, setlast_name] = useState("");
   const [email, setemail] = useState("");
-  const [error, setError] = useState("");
+
   const alert = useAlert();
+  let history = useHistory();
 
   const {
     register, formState: { errors }, handleSubmit 
   } = useForm();
 
  
-  const handleEmployeeSubmit = (first_name, last_name, email ) => {
-    
+  const handleEmployeeSubmit = (values) => {
+    console.log('values', values);
+   
     const userData = new FormData();
 
-    userData.append("first_name", first_name ? first_name : "");
-    userData.append("last_name", last_name ? last_name : "");
-    userData.append("email", email ? email : "" );
+    userData.append("first_name", values.first_name ? values.first_name : "");
+    userData.append("last_name", values.last_name ? values.last_name : "");
+    userData.append("email", values.email ? values.email : "" );
 
     Axios.post(apiBaseUrl + "/api/v1/add-employee", userData, {
       headers: {
@@ -31,6 +36,11 @@ function AddEmployeeScreen() {
     })
       .then((response) => {
         console.log(response);
+        if(response && response.data && response.data.msg) {
+          alert.success(response.data.msg)
+        }
+        history.push("/employee");
+        
       })
       .catch((error) => {
         if(error && error.response && error.response.data && error.response.data.msg) {
@@ -41,10 +51,13 @@ function AddEmployeeScreen() {
   };
 
   return (
+    <>
+      
     <Form
-      className="card card-body p-5 m-5 "
+      className="card card-body p-5 m-5 col-lg-6 mx-auto" 
       onSubmit={handleSubmit(handleEmployeeSubmit)}
-    >
+      >
+        <h5> Add New Employee </h5>
       <Form.Group controlId="message">
         <Form.Label> First Name:</Form.Label>
         <Form.Control
@@ -52,20 +65,20 @@ function AddEmployeeScreen() {
           placeholder="Enter First Name"
           defaultValue={first_name}
           onChange={(e) => setfirst_name(e.target.value)}
-          className={errors.first_Name && "is-invalid"}
-          {...register("first_Name", {
+          className={errors.first_name && "is-invalid"}
+          {...register("first_name", {
             required: true,
             minLength: 3,
             maxLength: 20,
           })}
         />
-          {errors.first_Name && (
+          {errors.first_name && (
             <span className="text-danger">
-              {errors.first_Name.type === "required" && "Please give first_Name"}
-              {errors.first_Name.type === "minLength" &&
-                "Please give first_Name minimum of 5 characters"}
-              {errors.first_Name.type === "maxLength" &&
-                "Please give first_Name maximum of 50 characters"}
+              {errors.first_name.type === "required" && "Please give first_name"}
+              {errors.first_name.type === "minLength" &&
+                "Please give first_name minimum of 5 characters"}
+              {errors.first_name.type === "maxLength" &&
+                "Please give first_name maximum of 50 characters"}
             </span>
           )}
        
@@ -98,10 +111,10 @@ function AddEmployeeScreen() {
       </Form.Group>
 
       <Form.Group controlId="email">
-                <Form.Label>Email address</Form.Label>
+                <Form.Label>Email Address:</Form.Label>
                 <Form.Control
                     type="email"
-                    placeholder="Enter email"
+                    placeholder="Enter Email Address"
                     defaultValue={email}
                     onChange={(e) => setemail(e.target.value)}
                     className={ errors.email && 'is-invalid' }
@@ -126,7 +139,8 @@ function AddEmployeeScreen() {
       <Button type="submit" variant="primary">
         Create Employee
       </Button>
-    </Form>
+      </Form>
+      </>
   );
 }
 

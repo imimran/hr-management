@@ -59,21 +59,21 @@ const addUser = async(req, res) => {
           return res.status(401).json({ error: true, msg: "E-mail already taken" });
         }
 
-        if (first_name == "" || first_name == null || first_name == undefined) {
-            return res
-              .status(401)
-              .json({ error: true, msg: "First Name is requrired." });
-        }
-        if (last_name == "" || last_name == null || last_name == undefined) {
-            return res
-              .status(401)
-              .json({ error: true, msg: "Last Name is requrired." });
-        }
-        if (email == "" || email == null || email == undefined) {
-            return res
-              .status(401)
-              .json({ error: true, msg: "Email is requrired." });
-          }
+        // if (first_name == "" || first_name == null || first_name == undefined) {
+        //     return res
+        //       .status(401)
+        //       .json({ error: true, msg: "First Name is requrired." });
+        // }
+        // if (last_name == "" || last_name == null || last_name == undefined) {
+        //     return res
+        //       .status(401)
+        //       .json({ error: true, msg: "Last Name is requrired." });
+        // }
+        // if (email == "" || email == null || email == undefined) {
+        //     return res
+        //       .status(401)
+        //       .json({ error: true, msg: "Email is requrired." });
+        //   }
         
         const newUser = await User.create({
             first_name,
