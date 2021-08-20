@@ -35,6 +35,11 @@ function Navbar() {
                                 Upload
                             </a>
                         </li>
+                        <li className="nav-item">
+                            <a className="nav-link" href="/send-mail">
+                                Send Mail
+                            </a>
+                        </li>
                     </ul>
                 </div>
             </nav>

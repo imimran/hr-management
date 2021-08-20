@@ -1,5 +1,5 @@
 import Sequelize from 'sequelize'
-export const sequelize = new Sequelize('hrmanagement', 'root', '@Abc123456', {
+export const sequelize = new Sequelize('hrmanagement', 'root', '', {
   dialect: 'mysql',
   host: 'localhost',
   pool: {
