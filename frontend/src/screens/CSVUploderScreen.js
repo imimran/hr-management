@@ -25,15 +25,16 @@ function CSVUploderScreen() {
     })
       .then((response) => {
         console.log(response);
-        if(response && response.data && response.data.msg) {
-          alert.success(response.data.success)
+        if(response && response.data && response.data.success) {
+          let message = response.data.success + (response.data.failed ? " and " + response.data.failed : "");
+          alert.success(message)
         }
         history.push("/employee");
         
       })
       .catch((error) => {
         console.log(error);
-        if(error && error.response && error.response.data && error.response.data.msg) {
+        if(error && error.response && error.response.data && error.response.data.failed) {
           alert.error(error.response.data.failed)
       }
         

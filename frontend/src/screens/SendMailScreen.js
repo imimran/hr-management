@@ -9,6 +9,7 @@ import { useHistory } from "react-router-dom";
 
 function SendMailScreen() {
   const [employees, setEmployee] = useState([]);
+  const [selectedEmployee, setSelectedEmployee] =  useState([]);
   const [loading, setLoading] = useState();
   const [error, setError] = useState();
   const [pageCount, setPageCount] = useState(0);
@@ -51,6 +52,18 @@ function SendMailScreen() {
         console.log(err);
       });
   };
+  const handleCheckBox = (e) => {
+    console.log(e.target.value);
+    console.log(e.target.checked);
+    let dummySelectedEmployees = [...selectedEmployee];
+    if(e.target.checked) {
+      dummySelectedEmployees.push(e.target.value);
+    } else {
+      dummySelectedEmployees = dummySelectedEmployees.filter(value => value != e.target.value);
+    }
+    console.log('dummySelectedEmployees', dummySelectedEmployees);
+    setSelectedEmployee(dummySelectedEmployees);
+  };
 
   const handleSendEmail = () => {
     setSubmitLoading(true);
@@ -59,7 +72,7 @@ function SendMailScreen() {
     // formData.append("message", message);
     // formData.append("subject", subject);
       
-    Axios.post(apiBaseUrl + "/api/customer/refund-request", formData, {
+    Axios.post(apiBaseUrl + "/api/", formData, {
       headers: {
         Authorization: "Bearer " + localStorage.getItem("access_token"),
       },
@@ -91,6 +104,7 @@ function SendMailScreen() {
         <Button
           type="primary"
           onClick={handleShow}
+          disabled={selectedEmployee.length> 0 ? false: true}
           //   loading={loading}
         >
           Send Bulk Message
@@ -114,14 +128,14 @@ function SendMailScreen() {
             </thead>
             <tbody>
               {employees.length > 0 ? (
-                employees.map((employee, id) => (
-                  <tr key={id}>
+                employees.map((employee, index) => (
+                  <tr key={index}>
                     <th colspan="">
                       <input
                         class="form-check-input"
                         type="checkbox"
-                        value=""
-                        id="flexCheckDefault"
+                        value={employee.id}
+                        onChange={(e) => handleCheckBox(e)}
                       />
                     </th>
 
