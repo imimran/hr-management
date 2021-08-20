@@ -14,11 +14,7 @@ const upload = async (req, res) => {
 
       console.log("path", path);
 
-    //   fs.createReadStream('my.csv')
-    // .pipe(csv.parse())
-    // .on('error', error => console.error(error))
-    // .on('data', row => console.log(`ROW=${JSON.stringify(row)}`))
-    // .on('end', rowCount => console.log(`Parsed ${rowCount} rows`));
+
   let successCount = 0;
   let errorCount = 0;
       fs.createReadStream(path)

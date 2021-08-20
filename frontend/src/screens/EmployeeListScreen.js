@@ -48,20 +48,21 @@ function EmployeeListScreen() {
   };
 
   return (
-    <>
-      <div className="container">
-      <h1>Employee</h1>
-      <p>Total {employees.length} Employee</p>
+
+      <div className="container card card-body p-5 m-5 col-lg-6 mx-auto ">
+      <h5>Employee List:</h5>
+      <br/>
+     
       {loading ? (
-        <h1>Loading........</h1>
+        <h3>Loading........</h3>
       ) : error ? (
-        <h1>Error</h1>
+        <h5>Server Error ! Try Again</h5>
       ) : (
-        <div className="col-lg-6 mx-auto">
+        <div className="mx-auto">
           <table className="table">
             <thead>
               <tr>
-                <th scope="col">#</th>
+                <th scope="col">ID</th>
                 <th scope="col">First Name</th>
                 <th scope="col">Last Name</th>
                 <th scope="col">Email</th>
@@ -113,7 +114,7 @@ function EmployeeListScreen() {
       )}
       </div>
       
-    </>
+   
   );
 }
 

@@ -4,7 +4,7 @@ import { sequelize } from './models/db';
 import cors from 'cors'
 
 import employeeRoutes from './routes/public'
-// import sequelize  from './models'
+
 const app = express()
 app.use(express.json())
 app.use(cors());

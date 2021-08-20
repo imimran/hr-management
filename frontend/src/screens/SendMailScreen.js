@@ -3,7 +3,7 @@ import Axios from "axios";
 import { Form, Button, Table, Modal } from "react-bootstrap";
 import ReactPaginate from "react-paginate";
 import { apiBaseUrl } from "../config/apiConfig";
-import { useForm } from "react-hook-form";
+// import { useForm } from "react-hook-form";
 import { useAlert } from "react-alert";
 
 
@@ -26,9 +26,9 @@ function SendMailScreen() {
   const alert = useAlert();
 
 
-  const {
-    register, formState: { errors }, handleSubmit 
-  } = useForm();
+  // const {
+  //   register, formState: { errors }, handleSubmit 
+  // } = useForm();
 
   useEffect(() => {
     setLoading(true);

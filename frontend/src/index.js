@@ -8,8 +8,8 @@ import AlertTemplate from 'react-alert-template-basic'
 
 const options = {
   position: positions.MIDDLE,
-  timeout: 2000,
-  offset: '15px',
+  timeout: 3000,
+  offset: '25px',
   transition: transitions.FADE
 }
 ReactDOM.render(
