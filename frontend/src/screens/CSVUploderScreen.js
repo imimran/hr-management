@@ -1,5 +1,4 @@
 import React, {useState, useCallback} from 'react'
-import { FileDrop } from 'react-file-drop';
 import Dropzone from 'react-dropzone'
 import { useAlert } from 'react-alert';
 import { useHistory } from "react-router-dom";

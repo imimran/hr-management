@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import Axios from "axios";
-import { Form, Button, Card, Table, Modal } from "react-bootstrap";
+import { Form, Button, Table, Modal } from "react-bootstrap";
 import ReactPaginate from "react-paginate";
 import { apiBaseUrl } from "../config/apiConfig";
 import { useForm } from "react-hook-form";
@@ -15,9 +15,18 @@ function SendMailScreen() {
   const [pageCount, setPageCount] = useState(0);
   const [show, setShow] = useState(false);
   const [submitLoading, setSubmitLoading] = useState(false);
+  const [subject, setSubject] = useState("");
+  const [message, setMessage] = useState("");
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
+
+  const alert = useAlert();
+
+
+  const {
+    register, formState: { errors }, handleSubmit 
+  } = useForm();
 
   useEffect(() => {
     setLoading(true);
@@ -66,34 +75,39 @@ function SendMailScreen() {
   };
 
   const handleSendEmail = () => {
+    console.log(selectedEmployee);
+    console.log(message);
+    console.log(subject);
     setSubmitLoading(true);
     const formData = new FormData();
-    // formData.append("employees", selectedOrder.id);
-    // formData.append("message", message);
-    // formData.append("subject", subject);
+    // formData.append("employees", values.selectedEmployee ? values.selectedEmployee : "");
+    // formData.append("message", values.message ? values.message : "");
+    // formData.append("subject", values.subject ? values.subject : "")
+    formData.append("employees", selectedEmployee ? selectedEmployee : "");
+    formData.append("message", message ? message : "");
+    formData.append("subject", subject ? subject : "")
       
-    Axios.post(apiBaseUrl + "/api/", formData, {
+    Axios.post(apiBaseUrl + "/api/v1/send-bulk-message", formData, {
       headers: {
-        Authorization: "Bearer " + localStorage.getItem("access_token"),
+        "Content-Type": "multipart/form-data",
       },
     })
       .then((response) => {
-        //console.log(response);
-        if (response.data.data["alert-type"] === "success") {
-         
-        //   alert.success(response.data.data["message"]);
+        console.log(response);
+        if(response && response.data && response.data.msg) {
+          alert.success(response.data.msg)
+        }
           setShow(false);
           setSubmitLoading(false);
           
-        } else {
-          setSubmitLoading(false);
-        //   alert.error(response["message"]);
-        }
       })
 
-      .catch((err) => {
+      .catch((error) => {
         setSubmitLoading(false);
-        console.log(err);
+        if(error && error.response && error.response.data && error.response.data.msg) {
+          alert.error(error.response.data.msg)
+      }
+        console.log(error);
       });
   };
 
@@ -130,9 +144,9 @@ function SendMailScreen() {
               {employees.length > 0 ? (
                 employees.map((employee, index) => (
                   <tr key={index}>
-                    <th colspan="">
+                    <th >
                       <input
-                        class="form-check-input"
+                        className="form-check-input"
                         type="checkbox"
                         value={employee.id}
                         onChange={(e) => handleCheckBox(e)}
@@ -184,17 +198,23 @@ function SendMailScreen() {
           <Modal.Title>Modal heading</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <Form>
+          {/* <Form onSubmit={handleSubmit(handleSendEmail)}> */}
+          <Form >
+
             <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
               <Form.Label>Subject</Form.Label>
-              <Form.Control type="email" placeholder="name@example.com" />
+              <Form.Control type="email" placeholder="name@example.com" 
+              value={subject}
+              onChange={(e) => setSubject(e.target.value)}/>
             </Form.Group>
             <Form.Group
               className="mb-3"
               controlId="exampleForm.ControlTextarea1"
             >
               <Form.Label>Message Box</Form.Label>
-              <Form.Control as="textarea" rows={3} />
+              <Form.Control as="textarea" rows={3} 
+              value={message}
+              onChange={(e) => setMessage(e.target.value)}/>
             </Form.Group>
           </Form>
         </Modal.Body>
@@ -203,8 +223,11 @@ function SendMailScreen() {
             Close
           </Button>
           <Button variant="primary" onClick={() => handleSendEmail()} disabled={submitLoading}>
-            Save Changes
+            Send Message
           </Button>
+          {/* <Button type="submit" variant="primary">
+        Send Message
+      </Button> */}
         </Modal.Footer>
       </Modal>
     </div>
