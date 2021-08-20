@@ -22,7 +22,7 @@ const upload = async (req, res) => {
   let successCount = 0;
   let errorCount = 0;
       fs.createReadStream(path)
-        .pipe(csv.parse({ headers: true, ignoreEmpty: true, }))
+        .pipe(csv.parse({ headers: true, }))
         .validate(data => data.first_name !== '' && data.last_name !== '' && data.email !== '')
         .on("error", (error) => {          
           throw error.message;
@@ -41,23 +41,23 @@ const upload = async (req, res) => {
           User.bulkCreate(users, {
             validate: true,
           })
+           
+          
             .then(async() => {
            
               res.status(200).json({
                 error: false,
                 success:
-                  `Uploaded ${users.length} row successfully from ` + req.file.originalname,
-                successCount,
-                errorCount
-               
-              
+                  `Uploaded ${successCount} row successfully from ` + req.file.originalname,
+                failed:`Uploaded ${errorCount} row failed from ` + req.file.originalname,
+                     
               });
             })
             .catch((error) => {
               console.log(error);
               res.status(500).json({
                 error: error.message,
-                message: `Fail to import ${users.length} row into database!`,
+                failed: `Fail to import ${users.length} row into database!`,
             
               });
             });

@@ -1,5 +1,5 @@
 
-import React, {useState, useCallback, useRef} from 'react'
+import React, {useState, useCallback} from 'react'
 import { FileDrop } from 'react-file-drop';
 import Dropzone from 'react-dropzone'
 import { useAlert } from 'react-alert';
@@ -12,25 +12,6 @@ function CSVUploderScreen() {
 
   const alert = useAlert();
   let history = useHistory();
-
-  const styles = { border: '1px solid black', width: 600, color: 'black', padding: 20 };
-
-  const fileInputRef = useRef(null);
-
-  const handleFileDrop = (files, event) => {
-      console.log('onDrop!', files);
-  }
-
-  const handleFileInputChange = (event) => {
-      const { files } = event.target;
-      console.log('handleFileInputChange!', files);
-  }
-
-  const onTargetClick = () => {
-      fileInputRef.current.click()
-  }
-
-
   const onDrop = useCallback(acceptedFiles => {
 
     let data = new FormData();
@@ -66,23 +47,18 @@ function CSVUploderScreen() {
 
   return (
     // <div  className="card card-body p-5 m-5 col-lg-6 mx-auto" {...getRootProps()}>
-    <div>
-    <h1>React File Drop demo</h1>
-    <div style={styles} className="file-drop-area">
-        <FileDrop
-            onDrop={(files, event) => handleFileDrop(files, event)}
-            onTargetClick={onTargetClick}
-        >
-            Drop some files here!
-        </FileDrop>
-        <input
-            onChange={handleFileInputChange}
-            ref={fileInputRef}
-            type="file"
-            className="hidden"
-        />
-    </div>
-</div>
+      <Dropzone
+            acceptedFiles={[".csv, text/csv, application/vnd.ms-excel, application/csv, text/x-csv, application/x-csv, text/comma-separated-values, text/x-comma-separated-values"]}
+            onDrop={(acceptedFiles) => { onDrop(acceptedFiles)}}
+          >
+            {({ getRootProps, getInputProps }) => (
+              <div {...getRootProps()}  className="dropzone">
+                <input {...getInputProps()} />
+                <p>Try dropping some files here, or click to select files to upload.</p>
+                <p>Only *.jpeg and *.png images will be accepted</p>
+              </div>
+            )}
+          </Dropzone>
 
     // </div>
   )
