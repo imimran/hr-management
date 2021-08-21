@@ -54,7 +54,7 @@ function CSVUploderScreen() {
               <div {...getRootProps()}  className="dropzone">
                 <input {...getInputProps()} />
                 <p>Dropping files here, or click to select files to upload.</p>
-                <p>Only csv file will be accepted</p>
+                <p>Only CSV file will be accepted</p>
                
               </div>
             )}

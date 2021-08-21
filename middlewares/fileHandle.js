@@ -36,7 +36,7 @@ const csvFilter = (req, file, cb) => {
 const upload = multer({
     storage: fileStorage,
     fileFilter: csvFilter,
-    limits: { fileSize: 10000000 } 
+    // limits: { fileSize: 10000000 } 
 });
 
 
