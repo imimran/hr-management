@@ -86,6 +86,8 @@ function EmployeeListScreen() {
             </tbody>
           </table>
 
+          {employees.length > 0 ? (
+
           <div className="col-lg-6">
             <ReactPaginate
               previousLabel={"Prev"}
@@ -110,6 +112,9 @@ function EmployeeListScreen() {
              
             />
           </div>
+          ): null
+}
+          
         </div>
       )}
       </div>

@@ -1,4 +1,4 @@
-import React, {useState, useCallback} from 'react'
+import React from 'react'
 import Dropzone from 'react-dropzone'
 import { useAlert } from 'react-alert';
 import { useHistory } from "react-router-dom";
@@ -41,8 +41,6 @@ function CSVUploderScreen() {
 
 
   }
-
-  // const {getRootProps, getInputProps, isDragActive} = useDropzone({onDrop})
 
   return (
     <div  className="card card-body p-5 m-5 col-lg-6 mx-auto bg-gray" >

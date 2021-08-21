@@ -34,7 +34,7 @@ app.use(express.static(path.join(__dirname, '/uploads/')));
 
 //connect Database
 (async () => {
-    await sequelize.sync({ force: false });
+    await sequelize.sync({ force: true });
     console.log('Database Connected!')
   
 })()
