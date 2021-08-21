@@ -3,7 +3,7 @@ import fs from "fs";
 import * as csv from 'fast-csv';
 
 const upload = async (req, res) => {
-    // try {
+    try {
       if (req.file == undefined) {
         return res.status(400).send("Please upload a CSV file!");
       }
@@ -59,13 +59,14 @@ const upload = async (req, res) => {
               });
             });
         });
-    // } catch (error) {
-    //   console.log(error);
-    //   res.status(500).json({
-    //     error: true,
-    //     message: "Could not upload the file: " + req.file.originalname,
-    //   });
-    // }
+    } catch (error) {
+      console.log(error);
+      console.log(error.message);
+      res.status(500).json({
+        error: error.message,
+        failed: "Could not upload the file: " + req.file.originalname,
+      });
+    }
 };
   
 const getUsers = (req, res) => {
