@@ -10,7 +10,7 @@ function CSVUploderScreen() {
 
   const alert = useAlert();
   let history = useHistory();
-  const onDrop = useCallback(acceptedFiles => {
+  const onDrop = (acceptedFiles) => {
 
     let data = new FormData();
     data.append('file', acceptedFiles[0]);
@@ -40,12 +40,12 @@ function CSVUploderScreen() {
       });
 
 
-  }, []);
+  }
 
   // const {getRootProps, getInputProps, isDragActive} = useDropzone({onDrop})
 
   return (
-    <div  className="card card-body p-5 m-5 col-lg-6 mx-auto" >
+    <div  className="card card-body p-5 m-5 col-lg-6 mx-auto bg-gray" >
       <h4>  Create Employee by Upload CSV file </h4>
       <Dropzone
             acceptedFiles={[".csv, text/csv, application/vnd.ms-excel, application/csv, text/x-csv, application/x-csv, text/comma-separated-values, text/x-comma-separated-values"]}
@@ -56,6 +56,7 @@ function CSVUploderScreen() {
                 <input {...getInputProps()} />
                 <p>Dropping files here, or click to select files to upload.</p>
                 <p>Only csv file will be accepted</p>
+               
               </div>
             )}
           </Dropzone>

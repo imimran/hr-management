@@ -15,11 +15,12 @@ const upload = async (req, res) => {
       console.log("path", path);
 
 
+  let emailPattern= /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i;
   let successCount = 0;
   let errorCount = 0;
       fs.createReadStream(path)
-        .pipe(csv.parse({ headers: true, }))
-        .validate(data => data.first_name !== '' && data.last_name !== '' && data.email !== '')
+        .pipe(csv.parse({  headers: [ 'first_name', 'last_name', 'email', undefined ],renameHeaders: true, ignoreEmpty: true }))
+        .validate(data => data.first_name !== '' && data.last_name !== '' && emailPattern.test(data.email))
         .on("error", (error) => {          
           throw error.message;
         })

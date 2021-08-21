@@ -25,3 +25,9 @@ body {
 .navbar-nav {
   margin-right: auto !important;
 }
+
+.card.bg-gray {
+  background: #eee;
+  border: 1px dashed #999;
+  cursor: pointer;
+}
