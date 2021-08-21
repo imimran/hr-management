@@ -1,0 +1,6 @@
+"id", "first_name", "last_name", "email", "status"
+1, "Al-Imran", "hossain", "a@gmail.com", "active"
+2, "Imran", "hossain", "ab@gmail.com", "active"
+3, "Hossain", "hossain", "abc@gmail.com", "active"
+4, "Al", "hossain", "adbgmail.com", "active"
+5, "Hossain", "Imran", "accf@gmailcom", "active"

@@ -231,7 +231,7 @@ const handleSubject = e => {
 
             <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
               <Form.Label>Subject</Form.Label>
-              <Form.Control type="email" placeholder="name@example.com" 
+              <Form.Control type="email" placeholder="Write Subject..." 
               value={subject}
               onChange={(e) => handleSubject(e)}/>
                {subjectError && (
@@ -246,6 +246,7 @@ const handleSubject = e => {
             >
               <Form.Label>Message Box</Form.Label>
               <Form.Control as="textarea" rows={3} 
+              placeholder="Write something..." 
               value={message}
               onChange={(e) => handleMessage(e)}/>
               {messageError && (
